@@ -1,5 +1,5 @@
 <template>
-  <div>THIS IS HOME</div>
+  <div class="text-red-600">THIS IS HOME</div>
 </template>
 <script>
 import HomeApi from "@/api/modules/HomeApi";
