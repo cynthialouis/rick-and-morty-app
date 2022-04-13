@@ -8,10 +8,11 @@ const createRouter = () =>
 		routes: [
 			{
 				path: '/characters',
-				component: () => import('@/views/Characters.vue'),
+				component: () => import('@/views/CharactersView.vue'),
 			},
 		],
 	})
 
 const router = createRouter()
+
 export default router

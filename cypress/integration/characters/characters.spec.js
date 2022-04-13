@@ -35,4 +35,31 @@ describe('Rick and Morty characters', () => {
 			.find('[data-context=specie]')
 			.should('contain', 'Human')
 	})
+
+	it('can search a character from name from search button', () => {
+		cy.get('[data-context=characters-view] [data-context=search-input]')
+			.should('have.attr', 'placeholder', 'Search...')
+			.type('test')
+		cy.get(
+			'[data-context=characters-view] [data-context=search-btn]'
+		).click()
+		// check url params
+		cy.wait('@characters').then((xhr) => {
+			expect(xhr.request.url).to.deep.eq(
+				'https://rickandmortyapi.com/api/character?name=test'
+			)
+		})
+	})
+
+	it('can search a character from name from enter key', () => {
+		cy.get('[data-context=characters-view] [data-context=search-input]')
+			.should('have.attr', 'placeholder', 'Search...')
+			.type('hello{enter}')
+		// check url params
+		cy.wait('@characters').then((xhr) => {
+			expect(xhr.request.url).to.deep.eq(
+				'https://rickandmortyapi.com/api/character?name=hello'
+			)
+		})
+	})
 })

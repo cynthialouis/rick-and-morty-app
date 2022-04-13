@@ -2,18 +2,18 @@
 	<div class="p-16 bg-gray-50" data-context="characters-view">
 		<search-bar @search="fetchCharacters" />
 
-		<character-thumbnail v-if="characters" :characters="characters" />
+		<characters v-if="characters" :characters="characters" />
 	</div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import CharacterThumbnail from '../components/characters/CharacterThumbnail.vue'
+import Characters from '../components/characters/Characters.vue'
 import SearchBar from '../components/form/SearchBar.vue'
 
 export default {
-	name: 'Characters',
-	components: { CharacterThumbnail, SearchBar },
+	name: 'CharactersView',
+	components: { Characters, SearchBar },
 	data: () => ({
 		is_loading: false,
 		characters: null,
