@@ -1,5 +1,6 @@
 import httpClient from './httpClient'
 
-const getAllCharacters = () => httpClient.get('/api/character')
+const getAllCharactersFromApi = (params) =>
+	httpClient.get('/api/character', { params })
 
-export { getAllCharacters }
+export { getAllCharactersFromApi }

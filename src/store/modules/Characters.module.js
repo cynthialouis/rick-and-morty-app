@@ -1,4 +1,4 @@
-import { getAllCharacters } from '@/api/characters.api'
+import { getAllCharactersFromApi } from '@/api/characters.api'
 
 const state = {
 	characters: [],
@@ -11,9 +11,9 @@ const getters = {
 }
 
 const actions = {
-	async fetchCharacters({ commit }) {
+	async fetchCharactersFromApi({ commit }, params) {
 		try {
-			const response = await getAllCharacters()
+			const response = await getAllCharactersFromApi(params)
 			commit('SET_CHARACTERS', response.data.results)
 		} catch (error) {
 			console.error(error)
