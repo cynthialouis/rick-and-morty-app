@@ -7,7 +7,7 @@ const createRouter = () =>
 	new VueRouter({
 		routes: [
 			{
-				path: '/',
+				path: '/characters',
 				component: () => import('@/views/Characters.vue'),
 			},
 		],

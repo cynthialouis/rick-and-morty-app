@@ -1,7 +1,8 @@
 <template>
-	<div class="p-16 bg-gray-50">
+	<div class="p-16 bg-gray-50" data-context="characters-view">
 		<ul
 			class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 border rounded"
+			data-context="characters"
 		>
 			<character-thumbnail
 				v-for="character in characters"
