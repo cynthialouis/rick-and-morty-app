@@ -19,7 +19,10 @@ export default {
 	components: { Characters, SearchBar, SimplePagination },
 	data: () => ({
 		is_loading: false,
-		params: {},
+		params: {
+			name: null,
+			page: null,
+		},
 	}),
 	methods: {
 		...mapActions('Characters', ['fetchCharactersFromApi']),

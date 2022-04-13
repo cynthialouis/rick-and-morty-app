@@ -2,9 +2,10 @@
 	<nav
 		v-if="getPagination"
 		class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
+		data-context="pagination"
 	>
 		<div class="hidden sm:block">
-			<p class="text-sm text-gray-700">
+			<p class="text-sm text-gray-700" data-context="results">
 				Showing
 				<span class="font-medium">{{ current_results.from }}</span>
 				to
@@ -19,6 +20,7 @@
 				class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
 				@click="getPreviousPage"
 				:disabled="null === getPagination.prev"
+				data-context="previous-btn"
 			>
 				Previous
 			</button>
@@ -26,6 +28,7 @@
 				class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
 				@click="getNextPage"
 				:disabled="null === getPagination.next"
+				data-context="next-btn"
 			>
 				Next
 			</button>

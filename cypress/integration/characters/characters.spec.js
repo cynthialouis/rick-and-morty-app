@@ -45,8 +45,9 @@ describe('Rick and Morty characters', () => {
 		).click()
 		// check url params
 		cy.wait('@characters').then((xhr) => {
+			console.log(xhr)
 			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?name=test'
+				'https://rickandmortyapi.com/api/character?name=test&page=1'
 			)
 		})
 	})
@@ -58,7 +59,42 @@ describe('Rick and Morty characters', () => {
 		// check url params
 		cy.wait('@characters').then((xhr) => {
 			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?name=hello'
+				'https://rickandmortyapi.com/api/character?name=hello&page=1'
+			)
+		})
+	})
+
+	it('can navigate with pagination', () => {
+		cy.get('[data-context=characters-view] [data-context=pagination]').as(
+			'pagination'
+		)
+
+		cy.get('@pagination')
+			.find('[data-context=results]')
+			.should('contain', 'Showing 1 to 20 of 826 results')
+
+		// on first page, previous button is disabled
+		cy.get('@pagination')
+			.find('[data-context=previous-btn]')
+			.should('have.attr', 'disabled', 'disabled')
+
+		// going on next page
+		cy.get('@pagination').find('[data-context=next-btn]').click()
+		// check url params
+		cy.wait('@characters').then((xhr) => {
+			expect(xhr.request.url).to.deep.eq(
+				'https://rickandmortyapi.com/api/character?page=2'
+			)
+		})
+
+		// add a search
+		cy.get('[data-context=characters-view] [data-context=search-input]')
+			.should('have.attr', 'placeholder', 'Search...')
+			.type('hello{enter}')
+		// check url params
+		cy.wait('@characters').then((xhr) => {
+			expect(xhr.request.url).to.deep.eq(
+				'https://rickandmortyapi.com/api/character?name=hello&page=1'
 			)
 		})
 	})
