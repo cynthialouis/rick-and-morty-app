@@ -1,31 +1,49 @@
 <template>
 	<div class="p-16 bg-gray-50" data-context="characters-view">
-		<search-bar @search="fetchCharacters" />
+		<search-bar @search="search" />
 
-		<characters v-if="characters" :characters="characters" />
+		<characters />
+
+		<simple-pagination @previous="paginate" @next="paginate" />
 	</div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Characters from '../components/characters/Characters.vue'
-import SearchBar from '../components/form/SearchBar.vue'
+import SearchBar from '../components/list/SearchBar.vue'
+import SimplePagination from '../components/list/SimplePagination.vue'
 
 export default {
 	name: 'CharactersView',
-	components: { Characters, SearchBar },
+	components: { Characters, SearchBar, SimplePagination },
 	data: () => ({
 		is_loading: false,
-		characters: null,
+		params: {},
 	}),
-	computed: {
-		...mapGetters('Characters', ['getCharacters']),
-	},
 	methods: {
 		...mapActions('Characters', ['fetchCharactersFromApi']),
-		async fetchCharacters($event) {
-			await this.fetchCharactersFromApi({ name: $event })
-			this.characters = this.getCharacters
+		/**
+		 * Reset params and call fetch API
+		 */
+		search(name) {
+			this.params.name = name ? name : null
+			this.params.page = 1
+			this.fetchCharacters()
+		},
+		/**
+		 * Set page param and call fetch API
+		 */
+		paginate(page) {
+			this.params.page = page
+			this.fetchCharacters()
+		},
+		/**
+		 * Call fetch API
+		 * @returns {Promise<void>}
+		 */
+		async fetchCharacters() {
+			await this.fetchCharactersFromApi(this.params)
 		},
 	},
 	mounted() {
