@@ -16,7 +16,7 @@ const actions = {
 			commit('SET_CHARACTERS', response.data.results)
 			commit('SET_PAGINATION', response.data.info)
 		} catch (error) {
-			console.error('here', error)
+			console.error(error)
 		}
 	},
 	async fetchCharacterFromApi({ commit }, id) {

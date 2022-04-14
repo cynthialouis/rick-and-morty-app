@@ -77,7 +77,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.characters.length === 0) {
+		if (0 === this.characters.length) {
 			this.fetchCharacters()
 		}
 	},
