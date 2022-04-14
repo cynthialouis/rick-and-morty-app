@@ -1,8 +1,12 @@
-import { getAllCharactersFromApi } from '@/api/characters.api'
+import {
+	getAllCharactersFromApi,
+	getCharacterFromApi,
+} from '@/api/characters.api'
 
 const state = {
 	characters: [],
 	pagination: null,
+	character: null,
 }
 
 const getters = {
@@ -11,6 +15,9 @@ const getters = {
 	},
 	getPagination(state) {
 		return state.pagination
+	},
+	getCharacter(state) {
+		return state.character
 	},
 }
 
@@ -24,6 +31,14 @@ const actions = {
 			console.error(error)
 		}
 	},
+	async fetchCharacterFromApi({ commit }, id) {
+		try {
+			const response = await getCharacterFromApi(id)
+			commit('SET_CHARACTER', response.data)
+		} catch (error) {
+			console.error(error)
+		}
+	},
 }
 
 const mutations = {
@@ -32,6 +47,9 @@ const mutations = {
 	},
 	SET_PAGINATION(state, data) {
 		state.pagination = data
+	},
+	SET_CHARACTER(state, data) {
+		state.character = data
 	},
 }
 

@@ -1,5 +1,6 @@
 <template>
 	<div
+		v-if="getCharacter"
 		class="p-16 h-screen bg-gray-50 text-gray-600"
 		data-context="character-view"
 	>
@@ -13,20 +14,17 @@
 					<h1
 						class="text-gray-800 font-medium uppercase tracking-wide mr-2"
 					>
-						Cynthia LOUIS
+						{{ getCharacter.name }}
 					</h1>
-					<badge color="pink">
-						<span>Humanoïd (alive)</span>
+					<badge :color="gender_color">
+						<span>{{ specie_and_status }}</span>
 					</badge>
 				</div>
-				<div class="text-sm italic">Type of Ants in the eyes</div>
+				<div class="text-sm italic">{{ getCharacter.type }}</div>
 			</div>
 
 			<div class="md:row-span-3 md:row-start-1 mb-4 md:mr-4">
-				<img
-					src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-					alt="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-				/>
+				<img :src="getCharacter.image" :alt="getCharacter.name" />
 			</div>
 
 			<div class="md:row-start-3 md:row-span-1 md:col-span-2">
@@ -45,7 +43,7 @@
 							d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
-					<span>Earth (C-137)</span>
+					<span>{{ getCharacter.origin.name }}</span>
 				</div>
 				<div class="flex mb-1">
 					<svg
@@ -67,7 +65,7 @@
 							d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
 						/>
 					</svg>
-					<span>City of Nantes</span>
+					<span>{{ getCharacter.location.name }}</span>
 				</div>
 				<div class="flex">
 					<svg
@@ -84,7 +82,7 @@
 							d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
 						/>
 					</svg>
-					<span>27 episodes</span>
+					<span>{{ getCharacter.episode.length }} episodes</span>
 				</div>
 			</div>
 		</div>
@@ -93,9 +91,38 @@
 
 <script>
 import Badge from '../components/ui/Badge.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
 	name: 'CharacterView',
 	components: { Badge },
+	computed: {
+		...mapGetters('Characters', ['getCharacter']),
+		character_id() {
+			return this.$route.params.id
+		},
+		specie_and_status() {
+			return `${this.getCharacter.species} (${this.getCharacter.status})`
+		},
+		gender_color() {
+			const gender = this.getCharacter.gender
+			return 'Male' === gender
+				? 'blue'
+				: 'Female' === gender
+				? 'pink'
+				: 'yellow'
+		},
+	},
+	methods: {
+		...mapActions('Characters', ['fetchCharacterFromApi']),
+	},
+	mounted() {
+		this.fetchCharacterFromApi(this.character_id)
+	},
+	watch: {
+		character_id(value) {
+			this.fetchCharacterFromApi(value)
+		},
+	},
 }
 </script>
