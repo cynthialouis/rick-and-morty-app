@@ -98,4 +98,37 @@ describe('Rick and Morty characters', () => {
 			)
 		})
 	})
+
+	it('opens a character details page on click on his thumbnail', () => {
+		cy.fixture('character')
+			.then((json) => {
+				cy.intercept('GET', '/api/character/1', json)
+			})
+			.as('character')
+
+		cy.get(
+			'[data-context=characters-view] [data-context=characters] [data-context=thumbnail]'
+		)
+			.eq(0)
+			.click()
+		cy.wait('@character')
+		cy.url().should('eq', Cypress.config().baseUrl + '/character/1')
+
+		// check info
+		cy.get('[data-context=character-view]').should('exist')
+		cy.get('[data-context=name]').should('contain', 'Rick')
+		cy.get('[data-context=badge] [data-context=status]').should(
+			'contain',
+			'Human (Alive)'
+		)
+		cy.get('[data-context=type]').should('contain', 'Ceci est un type')
+		cy.get('[data-context=image]').should(
+			'have.attr',
+			'src',
+			'https://rickandmortyapi.com/api/character/avatar/1.jpeg'
+		)
+		cy.get('[data-context=origin]').should('contain', 'Earth (C-137)')
+		cy.get('[data-context=location]').should('contain', 'Citadel of Ricks')
+		cy.get('[data-context=episodes]').should('contain', '51 episodes')
+	})
 })
