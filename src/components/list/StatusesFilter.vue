@@ -38,7 +38,6 @@
 <script>
 export default {
 	name: 'StatusesFilter',
-	components: {},
 	data: () => ({
 		checked_status: [],
 	}),

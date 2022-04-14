@@ -10,7 +10,7 @@
 				class="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
 				data-context="thumbnail"
 			>
-				<router-link :to="`/character/${character.id}`">
+				<router-link :to="`/characters/${character.id}`">
 					<div class="flex-1 flex flex-col p-8">
 						<img
 							class="w-32 h-32 flex-shrink-0 mx-auto rounded-full"

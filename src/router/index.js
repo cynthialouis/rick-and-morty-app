@@ -11,7 +11,7 @@ const createRouter = () =>
 				component: () => import('@/views/CharactersView.vue'),
 			},
 			{
-				path: '/character/:id',
+				path: '/characters/:id',
 				component: () => import('@/views/CharacterView.vue'),
 			},
 		],
