@@ -3,7 +3,10 @@
 		<page-header />
 
 		<div class="p-16 bg-gray-50" data-context="characters-view">
-			<search-bar @search="search" />
+			<div class="flex mb-4">
+				<search-bar @search="searchByName" class="mr-8" />
+				<statuses-filter @status="filterByStatus" />
+			</div>
 
 			<characters />
 
@@ -16,25 +19,34 @@
 import { mapActions, mapGetters } from 'vuex'
 import Characters from '../components/characters/Characters.vue'
 import SearchBar from '../components/list/SearchBar.vue'
+import StatusesFilter from '../components/list/StatusesFilter.vue'
 import SimplePagination from '../components/list/SimplePagination.vue'
 import PageHeader from '../components/ui/PageHeader.vue'
 
 export default {
 	name: 'CharactersView',
-	components: { Characters, SearchBar, SimplePagination, PageHeader },
+	components: {
+		Characters,
+		SearchBar,
+		SimplePagination,
+		PageHeader,
+		StatusesFilter,
+	},
 	data: () => ({
 		is_loading: false,
 		params: {
+			page: 1,
 			name: null,
-			page: null,
+			status: null,
 		},
 	}),
+
 	methods: {
 		...mapActions('Characters', ['fetchCharactersFromApi']),
 		/**
 		 * Reset params and call fetch API
 		 */
-		search(name) {
+		searchByName(name) {
 			this.params.name = name ? name : null
 			this.params.page = 1
 			this.fetchCharacters()
@@ -46,6 +58,15 @@ export default {
 			this.params.page = page
 			this.fetchCharacters()
 		},
+		/**
+		 * Reset params and call fetch API
+		 */
+		filterByStatus(status) {
+			this.params.status = status ? status : null
+			this.params.page = 1
+			this.fetchCharacters()
+		},
+
 		/**
 		 * Call fetch API
 		 * @returns {Promise<void>}
