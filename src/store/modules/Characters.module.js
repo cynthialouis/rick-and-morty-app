@@ -9,18 +9,6 @@ const state = {
 	character: null,
 }
 
-const getters = {
-	getCharacters(state) {
-		return state.characters
-	},
-	getPagination(state) {
-		return state.pagination
-	},
-	getCharacter(state) {
-		return state.character
-	},
-}
-
 const actions = {
 	async fetchCharactersFromApi({ commit }, params) {
 		try {
@@ -56,7 +44,6 @@ const mutations = {
 export default {
 	namespaced: true,
 	state,
-	getters,
 	actions,
 	mutations,
 }

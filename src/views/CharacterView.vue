@@ -6,7 +6,7 @@
 			data-context="character-view"
 		>
 			<div
-				v-if="getCharacter"
+				v-if="character"
 				class="border rounded p-8 m-8 lg:m-16 xl:m-16 grid md:grid-rows-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-5xl"
 			>
 				<div
@@ -17,7 +17,7 @@
 							class="text-gray-800 font-medium uppercase tracking-wide mr-2"
 							data-context="name"
 						>
-							{{ getCharacter.name }}
+							{{ character.name }}
 						</h1>
 						<badge :color="gender_color">
 							<span data-context="status">{{
@@ -26,15 +26,15 @@
 						</badge>
 					</div>
 					<div class="text-sm italic" data-context="type">
-						{{ getCharacter.type }}
+						{{ character.type }}
 					</div>
 				</div>
 
 				<div class="md:row-span-3 md:row-start-1 mb-4 md:mr-4">
 					<img
 						data-context="image"
-						:src="getCharacter.image"
-						:alt="getCharacter.name"
+						:src="character.image"
+						:alt="character.name"
 					/>
 				</div>
 
@@ -55,7 +55,7 @@
 							/>
 						</svg>
 						<span data-context="origin">{{
-							getCharacter.origin.name
+							character.origin.name
 						}}</span>
 					</div>
 					<div class="flex mb-1">
@@ -79,7 +79,7 @@
 							/>
 						</svg>
 						<span data-context="location">{{
-							getCharacter.location.name
+							character.location.name
 						}}</span>
 					</div>
 					<div class="flex">
@@ -98,7 +98,7 @@
 							/>
 						</svg>
 						<span data-context="episodes"
-							>{{ getCharacter.episode.length }} episodes</span
+							>{{ character.episode.length }} episodes</span
 						>
 					</div>
 				</div>
@@ -109,22 +109,24 @@
 
 <script>
 import Badge from '../components/ui/Badge.vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import PageHeader from '../components/ui/PageHeader.vue'
 
 export default {
 	name: 'CharacterView',
 	components: { Badge, PageHeader },
 	computed: {
-		...mapGetters('Characters', ['getCharacter']),
 		character_id() {
 			return this.$route.params.id
 		},
+		character() {
+			return this.$store.state.Characters.character
+		},
 		specie_and_status() {
-			return `${this.getCharacter.species} (${this.getCharacter.status})`
+			return `${this.character.species} (${this.character.status})`
 		},
 		gender_color() {
-			const gender = this.getCharacter.gender
+			const gender = this.character.gender
 			return 'Male' === gender
 				? 'blue'
 				: 'Female' === gender

@@ -112,7 +112,7 @@ describe('Rick and Morty characters', () => {
 			.eq(0)
 			.click()
 		cy.wait('@character')
-		cy.url().should('eq', Cypress.config().baseUrl + '/character/1')
+		cy.url().should('eq', Cypress.config().baseUrl + '/characters/1')
 
 		// check info
 		cy.get('[data-context=character-view]').should('exist')

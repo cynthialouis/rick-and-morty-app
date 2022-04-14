@@ -5,7 +5,7 @@
 			data-context="characters"
 		>
 			<li
-				v-for="character in getCharacters"
+				v-for="character in characters"
 				:key="character.id"
 				class="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
 				data-context="thumbnail"
@@ -42,13 +42,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
 	name: 'Characters',
 	components: {},
 	computed: {
-		...mapGetters('Characters', ['getCharacters']),
+		characters() {
+			return this.$store.state.Characters.characters
+		},
 	},
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<nav
-		v-if="getPagination"
+		v-if="pagination"
 		class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
 		data-context="pagination"
 	>
@@ -11,7 +11,7 @@
 				to
 				<span class="font-medium">{{ current_results.to }}</span>
 				of
-				<span class="font-medium">{{ getPagination.count }}</span>
+				<span class="font-medium">{{ pagination.count }}</span>
 				results
 			</p>
 		</div>
@@ -19,7 +19,7 @@
 			<button
 				class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
 				@click="getPreviousPage"
-				:disabled="null === getPagination.prev"
+				:disabled="null === pagination.prev"
 				data-context="previous-btn"
 			>
 				Previous
@@ -27,7 +27,7 @@
 			<button
 				class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
 				@click="getNextPage"
-				:disabled="null === getPagination.next"
+				:disabled="null === pagination.next"
 				data-context="next-btn"
 			>
 				Next
@@ -37,16 +37,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 const LIMIT_PARAM = 20
 
 export default {
 	name: 'SimplePagination',
 	computed: {
-		...mapGetters('Characters', ['getCharacters', 'getPagination']),
+		pagination() {
+			return this.$store.state.Characters.pagination
+		},
+		characters() {
+			return this.$store.state.Characters.characters
+		},
 		current_page() {
-			const pagination_previous = this.getPagination.prev
+			const pagination_previous = this.pagination.prev
 			if (null === pagination_previous) {
 				return 1
 			} else {
@@ -57,14 +60,14 @@ export default {
 			if (1 === this.current_page) {
 				return {
 					from: 1,
-					to: this.getCharacters.length,
+					to: this.characters.length,
 				}
 			} else {
 				return {
 					from: (this.current_page - 1) * LIMIT_PARAM + 1,
 					to:
 						(this.current_page - 1) * LIMIT_PARAM +
-						this.getCharacters.length,
+						this.characters.length,
 				}
 			}
 		},
