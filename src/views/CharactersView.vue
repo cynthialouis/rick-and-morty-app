@@ -1,10 +1,14 @@
 <template>
-	<div class="p-16 bg-gray-50" data-context="characters-view">
-		<search-bar @search="search" />
+	<div>
+		<page-header />
 
-		<characters />
+		<div class="p-16 bg-gray-50" data-context="characters-view">
+			<search-bar @search="search" />
 
-		<simple-pagination @previous="paginate" @next="paginate" />
+			<characters />
+
+			<simple-pagination @previous="paginate" @next="paginate" />
+		</div>
 	</div>
 </template>
 
@@ -13,10 +17,11 @@ import { mapActions, mapGetters } from 'vuex'
 import Characters from '../components/characters/Characters.vue'
 import SearchBar from '../components/list/SearchBar.vue'
 import SimplePagination from '../components/list/SimplePagination.vue'
+import PageHeader from '../components/ui/PageHeader.vue'
 
 export default {
 	name: 'CharactersView',
-	components: { Characters, SearchBar, SimplePagination },
+	components: { Characters, SearchBar, SimplePagination, PageHeader },
 	data: () => ({
 		is_loading: false,
 		params: {

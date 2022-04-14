@@ -130,5 +130,12 @@ describe('Rick and Morty characters', () => {
 		cy.get('[data-context=origin]').should('contain', 'Earth (C-137)')
 		cy.get('[data-context=location]').should('contain', 'Citadel of Ricks')
 		cy.get('[data-context=episodes]').should('contain', '51 episodes')
+
+		// navigate back to characters page
+		cy.get('[data-context=page-header] [data-context=title]')
+			.should('contain', 'Rick and Morty characters')
+			.click()
+		cy.wait('@characters')
+		cy.url().should('eq', Cypress.config().baseUrl + '/characters')
 	})
 })
