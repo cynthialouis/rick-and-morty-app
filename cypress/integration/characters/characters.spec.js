@@ -47,7 +47,7 @@ describe('Rick and Morty characters', () => {
 		cy.wait('@characters').then((xhr) => {
 			console.log(xhr)
 			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?name=test&page=1'
+				'https://rickandmortyapi.com/api/character?page=1&name=test'
 			)
 		})
 	})
@@ -59,7 +59,7 @@ describe('Rick and Morty characters', () => {
 		// check url params
 		cy.wait('@characters').then((xhr) => {
 			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?name=hello&page=1'
+				'https://rickandmortyapi.com/api/character?page=1&name=hello'
 			)
 		})
 	})
@@ -87,14 +87,14 @@ describe('Rick and Morty characters', () => {
 			)
 		})
 
-		// add a search
+		// add a search on name
 		cy.get('[data-context=characters-view] [data-context=search-input]')
 			.should('have.attr', 'placeholder', 'Search...')
 			.type('hello{enter}')
 		// check url params
 		cy.wait('@characters').then((xhr) => {
 			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?name=hello&page=1'
+				'https://rickandmortyapi.com/api/character?page=1&name=hello'
 			)
 		})
 	})
@@ -137,5 +137,33 @@ describe('Rick and Morty characters', () => {
 			.click()
 		cy.wait('@characters')
 		cy.url().should('eq', Cypress.config().baseUrl + '/characters')
+	})
+
+	it('can filter on status', () => {
+		cy.get(
+			'[data-context=characters-view] [data-context=statuses-filter] input'
+		)
+			.should('have.length', 3)
+			.eq(0)
+			.check()
+
+		// check url params
+		cy.wait('@characters').then((xhr) => {
+			console.log(xhr)
+			expect(xhr.request.url).to.deep.eq(
+				'https://rickandmortyapi.com/api/character?page=1&status=alive'
+			)
+		})
+
+		// add a search on name
+		cy.get('[data-context=characters-view] [data-context=search-input]')
+			.should('have.attr', 'placeholder', 'Search...')
+			.type('rick{enter}')
+		// check url params
+		cy.wait('@characters').then((xhr) => {
+			expect(xhr.request.url).to.deep.eq(
+				'https://rickandmortyapi.com/api/character?page=1&name=rick&status=alive'
+			)
+		})
 	})
 })

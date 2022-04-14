@@ -1,5 +1,5 @@
 <template>
-	<div class="flex text-gray-700">
+	<div class="flex text-gray-700" data-context="statuses-filter">
 		<div class="flex flex-col">
 			<div>
 				<input
