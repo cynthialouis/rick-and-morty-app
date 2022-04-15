@@ -103,18 +103,20 @@
 					</div>
 				</div>
 			</div>
+			<error v-else />
 		</div>
 	</div>
 </template>
 
 <script>
-import Badge from '../components/ui/Badge.vue'
+import Badge from '../components/shared/ui/Badge.vue'
 import { mapActions } from 'vuex'
-import PageHeader from '../components/ui/PageHeader.vue'
+import PageHeader from '../components/shared/ui/PageHeader.vue'
+import Error from '../components/shared/ui/Error.vue'
 
 export default {
 	name: 'CharacterView',
-	components: { Badge, PageHeader },
+	components: { Badge, PageHeader, Error },
 	computed: {
 		character_id() {
 			return this.$route.params.id
@@ -136,13 +138,28 @@ export default {
 	},
 	methods: {
 		...mapActions('Characters', ['fetchCharacterFromApi']),
+		/**
+		 * Call fetch API
+		 * @returns {Promise<void>}
+		 */
+		async fetchCharacter(id) {
+			try {
+				await this.fetchCharacterFromApi(id)
+			} catch (e) {
+				console.log('error', e.response.data.error)
+				this.$store.commit(
+					'Characters/SET_ERROR',
+					e.response.data.error
+				)
+			}
+		},
 	},
 	mounted() {
-		this.fetchCharacterFromApi(this.character_id)
+		this.fetchCharacter(this.character_id)
 	},
 	watch: {
 		character_id(value) {
-			this.fetchCharacterFromApi(value)
+			this.fetchCharacter(value)
 		},
 	},
 }
