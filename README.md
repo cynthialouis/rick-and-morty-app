@@ -11,8 +11,8 @@ Technical stack :
 ```
 
 ```
-- All characters are visible on /characters
-- Details of one character visible on /characters/:id
+- All characters are visible on http://localhost:3000/#/characters
+- Details of one character visible on http://localhost:3000/#/characters/:id
 ```
 
 #### To install and run project

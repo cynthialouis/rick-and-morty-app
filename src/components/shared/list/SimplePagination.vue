@@ -50,25 +50,23 @@ export default {
 		},
 		current_page() {
 			const pagination_previous = this.pagination.prev
-			if (null === pagination_previous) {
+			if (pagination_previous === null) {
 				return 1
-			} else {
-				return parseInt(pagination_previous.match(/page=(\d+)/)[1]) + 1
 			}
+			return parseInt(pagination_previous.match(/page=(\d+)/)[1]) + 1
 		},
 		current_results() {
-			if (1 === this.current_page) {
+			if (this.current_page === 1) {
 				return {
 					from: 1,
 					to: this.characters.length,
 				}
-			} else {
-				return {
-					from: (this.current_page - 1) * LIMIT_PARAM + 1,
-					to:
-						(this.current_page - 1) * LIMIT_PARAM +
-						this.characters.length,
-				}
+			}
+			return {
+				from: (this.current_page - 1) * LIMIT_PARAM + 1,
+				to:
+					(this.current_page - 1) * LIMIT_PARAM +
+					this.characters.length,
 			}
 		},
 	},

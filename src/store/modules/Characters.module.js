@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign,no-shadow */
 import {
 	getAllCharactersFromApi,
 	getCharacterFromApi,
@@ -31,6 +32,7 @@ const mutations = {
 	SET_PAGINATION(state, pagination) {
 		state.pagination = pagination
 	},
+
 	SET_CHARACTER(state, character) {
 		state.character = character
 	},

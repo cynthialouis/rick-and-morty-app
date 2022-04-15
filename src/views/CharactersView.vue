@@ -18,12 +18,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Characters from '../components/characters/Characters.vue'
-import SearchBar from '../components/shared/list/SearchBar.vue'
-import StatusesFilter from '../components/shared/list/StatusesFilter.vue'
-import SimplePagination from '../components/shared/list/SimplePagination.vue'
-import PageHeader from '../components/shared/ui/PageHeader.vue'
-import Error from '../components/shared/ui/Error.vue'
+import Characters from '@/components/characters/Characters.vue'
+import SearchBar from '@/components/shared/list/SearchBar.vue'
+import StatusesFilter from '@/components/shared/list/StatusesFilter.vue'
+import SimplePagination from '@/components/shared/list/SimplePagination.vue'
+import PageHeader from '@/components/shared/ui/PageHeader.vue'
+import Error from '@/components/shared/ui/Error.vue'
 
 export default {
 	name: 'CharactersView',
@@ -53,7 +53,7 @@ export default {
 		 * Reset params and call fetch API
 		 */
 		searchByName(name) {
-			this.params.name = name ? name : null
+			this.params.name = name || null
 			this.params.page = 1
 			this.fetchCharacters()
 		},
@@ -68,7 +68,7 @@ export default {
 		 * Reset params and call fetch API
 		 */
 		filterByStatus(status) {
-			this.params.status = status ? status : null
+			this.params.status = status || null
 			this.params.page = 1
 			this.fetchCharacters()
 		},
@@ -89,7 +89,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (0 === this.characters.length) {
+		if (this.characters.length === 0) {
 			this.fetchCharacters()
 		}
 	},

@@ -109,10 +109,10 @@
 </template>
 
 <script>
-import Badge from '../components/shared/ui/Badge.vue'
 import { mapActions } from 'vuex'
-import PageHeader from '../components/shared/ui/PageHeader.vue'
-import Error from '../components/shared/ui/Error.vue'
+import Badge from '@/components/shared/ui/Badge.vue'
+import PageHeader from '@/components/shared/ui/PageHeader.vue'
+import Error from '@/components/shared/ui/Error.vue'
 
 export default {
 	name: 'CharacterView',
@@ -128,10 +128,10 @@ export default {
 			return `${this.character.species} (${this.character.status})`
 		},
 		gender_color() {
-			const gender = this.character.gender
-			return 'Male' === gender
+			const { gender } = this.character
+			return gender === 'Male'
 				? 'blue'
-				: 'Female' === gender
+				: gender === 'Female'
 				? 'pink'
 				: 'yellow'
 		},
@@ -146,7 +146,6 @@ export default {
 			try {
 				await this.fetchCharacterFromApi(id)
 			} catch (e) {
-				console.log('error', e.response.data.error)
 				this.$store.commit(
 					'Characters/SET_ERROR',
 					e.response.data.error
