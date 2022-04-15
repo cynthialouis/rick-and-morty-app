@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<ul
-			class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 border rounded"
-			data-context="characters"
-		>
+		<ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" data-context="characters">
 			<li
 				v-for="character in characters"
 				:key="character.id"

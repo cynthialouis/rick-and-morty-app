@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('Rick and Morty characters', () => {
 	beforeEach(() => {
 		cy.fixture('characters')
@@ -99,7 +100,7 @@ describe('Rick and Morty characters', () => {
 		})
 	})
 
-	it.only('opens a character details page on click on his thumbnail', () => {
+	it('opens a character details page on click on his thumbnail', () => {
 		cy.fixture('character')
 			.then((json) => {
 				cy.intercept('GET', '/api/character/1', json)
@@ -112,7 +113,7 @@ describe('Rick and Morty characters', () => {
 			.eq(0)
 			.click()
 		cy.wait('@character')
-		cy.url().should('eq', Cypress.config().baseUrl + '/characters/1')
+		cy.url().should('eq', `${Cypress.config().baseUrl}/characters/1`)
 
 		// check info
 		cy.get('[data-context=character-view]').should('exist')
@@ -135,8 +136,7 @@ describe('Rick and Morty characters', () => {
 		cy.get('[data-context=page-header] [data-context=title]')
 			.should('contain', 'Rick and Morty characters')
 			.click()
-		cy.url().should('eq', Cypress.config().baseUrl + '/characters')
-		cy.wait('@characters')
+		cy.url().should('eq', `${Cypress.config().baseUrl}/characters`)
 	})
 
 	it('can filter on status', () => {
