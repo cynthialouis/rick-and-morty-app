@@ -80,7 +80,6 @@ export default {
 			try {
 				await this.fetchCharactersFromApi(this.params)
 			} catch (e) {
-				console.log('error', e.response.data.error)
 				this.$store.commit(
 					'Characters/SET_ERROR',
 					e.response.data.error
@@ -89,9 +88,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.characters.length === 0) {
-			this.fetchCharacters()
-		}
+		this.fetchCharacters()
 	},
 }
 </script>
