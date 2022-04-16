@@ -12,6 +12,7 @@ module.exports = {
 	rules: {
 		'max-len': ['error', { code: 240 }],
 		'prettier/prettier': 2,
+		yoda: ['error', 'always'],
 	},
 	settings: {
 		'import/resolver': {

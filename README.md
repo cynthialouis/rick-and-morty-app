@@ -4,7 +4,7 @@
 Welcome to my tech assessment about Rick and Morty.
 
 Technical stack : 
-- Vue.js 2 with VueX and Vue Router.
+- Vue.js 2 with Options API / VueX / Vue Router
 - Axios to make HTTP requests to API (cf. https://rickandmortyapi.com/documentation/)
 - Tailwind CSS
 - Cypress for e2e tests

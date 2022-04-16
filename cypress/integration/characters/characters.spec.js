@@ -37,30 +37,14 @@ describe('Rick and Morty characters', () => {
 			.should('contain', 'Human')
 	})
 
-	it('can search a character from name from search button', () => {
+	it('can search a character from name', () => {
 		cy.get('[data-context=characters-view] [data-context=search-input]')
 			.should('have.attr', 'placeholder', 'Search...')
-			.type('test')
-		cy.get(
-			'[data-context=characters-view] [data-context=search-btn]'
-		).click()
-		// check url params
-		cy.wait('@characters').then((xhr) => {
-			console.log(xhr)
-			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?page=1&name=test'
-			)
-		})
-	})
-
-	it('can search a character from name from enter key', () => {
-		cy.get('[data-context=characters-view] [data-context=search-input]')
-			.should('have.attr', 'placeholder', 'Search...')
-			.type('hello{enter}')
+			.type('t')
 		// check url params
 		cy.wait('@characters').then((xhr) => {
 			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?page=1&name=hello'
+				'https://rickandmortyapi.com/api/character?page=1&name=t'
 			)
 		})
 	})
@@ -89,13 +73,13 @@ describe('Rick and Morty characters', () => {
 		})
 
 		// add a search on name
-		cy.get('[data-context=characters-view] [data-context=search-input]')
-			.should('have.attr', 'placeholder', 'Search...')
-			.type('hello{enter}')
+		cy.get(
+			'[data-context=characters-view] [data-context=search-input]'
+		).type('h')
 		// check url params
 		cy.wait('@characters').then((xhr) => {
 			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?page=1&name=hello'
+				'https://rickandmortyapi.com/api/character?page=1&name=h'
 			)
 		})
 	})
@@ -137,6 +121,7 @@ describe('Rick and Morty characters', () => {
 			.should('contain', 'Rick and Morty characters')
 			.click()
 		cy.url().should('eq', `${Cypress.config().baseUrl}/characters`)
+		cy.wait('@characters')
 	})
 
 	it('can filter on status', () => {
@@ -149,20 +134,19 @@ describe('Rick and Morty characters', () => {
 
 		// check url params
 		cy.wait('@characters').then((xhr) => {
-			console.log(xhr)
 			expect(xhr.request.url).to.deep.eq(
 				'https://rickandmortyapi.com/api/character?page=1&status=alive'
 			)
 		})
 
 		// add a search on name
-		cy.get('[data-context=characters-view] [data-context=search-input]')
-			.should('have.attr', 'placeholder', 'Search...')
-			.type('rick{enter}')
+		cy.get(
+			'[data-context=characters-view] [data-context=search-input]'
+		).type('r')
 		// check url params
 		cy.wait('@characters').then((xhr) => {
 			expect(xhr.request.url).to.deep.eq(
-				'https://rickandmortyapi.com/api/character?page=1&name=rick&status=alive'
+				'https://rickandmortyapi.com/api/character?page=1&name=r&status=alive'
 			)
 		})
 	})

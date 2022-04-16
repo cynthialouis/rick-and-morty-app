@@ -49,14 +49,14 @@ export default {
 			return this.$store.state.Characters.characters
 		},
 		current_page() {
-			const pagination_previous = this.pagination.prev
-			if (pagination_previous === null) {
+			const paginationPrevious = this.pagination.prev
+			if (null === paginationPrevious) {
 				return 1
 			}
-			return parseInt(pagination_previous.match(/page=(\d+)/)[1]) + 1
+			return parseInt(paginationPrevious.match(/page=(\d+)/)[1], 10) + 1
 		},
 		current_results() {
-			if (this.current_page === 1) {
+			if (1 === this.current_page) {
 				return {
 					from: 1,
 					to: this.characters.length,
